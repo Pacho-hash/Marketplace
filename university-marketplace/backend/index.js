@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const authRoutes = require('./routes/auth');  
 const itemRoutes = require('./routes/item');
+const adminRoutes = require('./routes/admin');  // Add this line
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -15,6 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/auth', authRoutes); 
 app.use('/items', itemRoutes);
+app.use('/admin', adminRoutes);  // Add this line
 
 // Corrected to serve the uploads directory as static
 const uploadDir = path.join(__dirname, 'uploads');
@@ -42,4 +44,4 @@ app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-module.exports = sequelize;  
+module.exports = sequelize;
