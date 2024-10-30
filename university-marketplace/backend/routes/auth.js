@@ -260,4 +260,17 @@ router.get('/check-admin', verifyToken, async (req, res) => {
     }
 });
 
+router.get('/users', verifyToken, async (req, res) => {
+    try {
+        const users = await User.findAll();
+        if (!users) {
+            return res.status(404).json({ message: 'No users found' });
+        }
+        res.json(users);
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        res.status(500).json({ message: 'Error fetching users' });
+    }
+});
+
 module.exports = router;
