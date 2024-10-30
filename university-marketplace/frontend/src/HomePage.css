@@ -1,0 +1,47 @@
+/* Main container for the homepage */
+.home-container {
+    text-align: center;
+    background-color: white;
+    color: black;
+    padding: 40px;
+    height: 100vh; /* Full height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+header {
+    margin-bottom: 30px;
+}
+
+h1 {
+    color: red; /* Red header */
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+p {
+    color: black;
+    font-size: 1.2rem;
+}
+
+.home-links {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between the links */
+}
+
+.home-link {
+    background-color: red; /* Red background for the links */
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none; /* Remove underline from links */
+    border-radius: 5px;
+    font-size: 1.2rem;
+}
+
+.home-link:hover {
+    background-color: darkred; /* Darker red on hover */
+}
