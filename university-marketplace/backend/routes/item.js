@@ -22,12 +22,12 @@ const upload = multer({ storage });
 
 // Create item with image upload
 router.post('/create-item', verifyToken, upload.single('image'), async (req, res) => {
-    const { title, description, price } = req.body;
+    const { title, description, price, quantity } = req.body;
     const sellerId = req.user.id; // Use req.user.id
     const imageUrl = req.file ? `http://localhost:5000/uploads/${req.file.filename}` : null;
 
     try {
-        const newItem = await Item.create({ title, description, price, sellerId, imageUrl });
+        const newItem = await Item.create({ title, description, price, sellerId, imageUrl, quantity });
         return res.status(201).json({ message: 'Item created successfully!', item: newItem });
     } catch (error) {
         console.error('Error creating item:', error);
