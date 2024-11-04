@@ -42,6 +42,7 @@ const ItemList = () => {
                                     <h3>{item.title}</h3>
                                     <p>{item.description}</p>
                                     <p className="item-price">Price: ${item.price}</p>
+                                    <p className="item-quantity">Quantity: {item.quantity}</p> {/* Display quantity */}
                                     <p className="item-user">Posted by: {item.user ? item.user.username : 'Unknown'}</p>
                                 </div>
                             </div>
