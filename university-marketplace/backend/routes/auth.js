@@ -95,15 +95,16 @@ router.put('/profile', verifyToken, async (req, res) => {
 });
 
 router.post('/create-item', verifyToken, async (req, res) => {
-    const { title, description, price } = req.body;
+    const { title, description, price, quantity } = req.body; // Include quantity
     const sellerId = req.userId;
     
     console.log("Creating item with sellerId:", sellerId);
     console.log('Request body:', req.body); // Log request body
     console.log('Uploaded file:', req.file); // Log uploaded file
     console.log('Seller ID (userId):', sellerId); // Log sellerId before creating the item
+
     // Validate input fields
-    if (!title || !description || !price || !sellerId) {
+    if (!title || !description || !price || !sellerId || quantity === undefined) {
         return res.status(400).json({ message: 'Please provide all required fields.' });
     }
 
@@ -114,7 +115,7 @@ router.post('/create-item', verifyToken, async (req, res) => {
             return res.status(400).json({ message: 'Seller ID does not exist.' });
         }
 
-        const newItem = await Item.create({ title, description, price, sellerId });
+        const newItem = await Item.create({ title, description, price, quantity, sellerId }); // Include quantity
         return res.status(201).json({ message: 'Item created successfully!', item: newItem });
     } catch (error) {
         console.error('Error creating item:', error);
@@ -207,7 +208,7 @@ router.delete('/items/:id', verifyToken, async (req, res) => {
 
 // Update item route
 router.put('/items/:id', verifyToken, async (req, res) => {
-    const { title, description, price } = req.body;
+    const { title, description, price, quantity } = req.body;
     const itemId = req.params.id;
 
     try {
@@ -220,6 +221,8 @@ router.put('/items/:id', verifyToken, async (req, res) => {
         item.title = title || item.title;
         item.description = description || item.description;
         item.price = price || item.price;
+        item.quantity = quantity || item.quantity;
+
         await item.save();
 
         res.status(200).json({ message: 'Item updated successfully', item });
