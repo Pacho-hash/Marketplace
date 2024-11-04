@@ -27,6 +27,11 @@ const Item = sequelize.define('Item', {
         type: DataTypes.STRING,
         allowNull: true,
     },
+    quantity: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+    },
 }, {
     tableName: 'items',
     timestamps: true,
