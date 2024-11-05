@@ -175,8 +175,8 @@ const Cart = () => {
                     <div className="payment-form">
                         <h3>Enter Payment Details</h3>
                         <div className="credit-card">
-                            {cardType === 'visa' && <img src="/path/to/visa-logo.png" alt="Visa" className="card-logo" />}
-                            {cardType === 'mastercard' && <img src="/path/to/mastercard-logo.png" alt="MasterCard" className="card-logo" />}
+                            {cardType === 'visa' && <img src="../Visa.png" alt="Visa" className="card-logo" />}
+                            {cardType === 'mastercard' && <img src="../MasterCard.png" alt="MasterCard" className="card-logo" />}
                             <div className="card-number">{cardNumber.padEnd(16, '•')}</div>
                             <div className="expiry-date">{expiryDate.padEnd(5, '•')}</div>
                             <div className="cvv">{cvv.padEnd(3, '•')}</div>
