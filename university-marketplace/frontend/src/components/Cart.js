@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavBar from '../components/NavBar';
 import './Cart.css';
-import './CreditCard.css'; 
+import './CreditCard.css';
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
@@ -10,6 +10,11 @@ const Cart = () => {
     const [cardNumber, setCardNumber] = useState('');
     const [expiryDate, setExpiryDate] = useState('');
     const [cvv, setCvv] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [cardType, setCardType] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [paymentSuccess, setPaymentSuccess] = useState(false);
     const token = localStorage.getItem('token');
 
     useEffect(() => {
@@ -47,10 +52,12 @@ const Cart = () => {
     };
 
     const handlePayNow = async () => {
-        if (!cardNumber || cardNumber.length !== 16 || !expiryDate || expiryDate.length !== 5 || !cvv || cvv.length !== 3) {
+        if (!cardNumber || cardNumber.length !== 16 || !expiryDate || expiryDate.length !== 5 || !cvv || cvv.length !== 3 || !firstName || !lastName) {
             alert('Please fill in all payment details correctly.');
             return;
         }
+
+        setLoading(true);
 
         try {
             // Simulate payment process
@@ -60,6 +67,8 @@ const Cart = () => {
                     cardNumber,
                     expiryDate,
                     cvv,
+                    firstName,
+                    lastName,
                 },
             }, {
                 headers: {
@@ -76,16 +85,31 @@ const Cart = () => {
 
             // Clear cart items in the frontend
             setCartItems([]);
-            alert('Payment successful!');
+            setTimeout(() => {
+                setLoading(false);
+                setPaymentSuccess(true);
+                setTimeout(() => {
+                    setPaymentSuccess(false);
+                }, 3000);
+            }, 3000);
         } catch (error) {
             console.error('Error processing payment:', error);
             alert('Payment failed. Please try again.');
+            setLoading(false);
         }
     };
 
     const handleCardNumberChange = (e) => {
         const value = e.target.value.replace(/\D/g, '').slice(0, 16);
         setCardNumber(value);
+
+        if (value.startsWith('4')) {
+            setCardType('visa');
+        } else if (value.startsWith('5')) {
+            setCardType('mastercard');
+        } else {
+            setCardType('');
+        }
     };
 
     const handleExpiryDateChange = (e) => {
@@ -100,11 +124,31 @@ const Cart = () => {
         setCvv(value);
     };
 
+    const handleFirstNameChange = (e) => {
+        const value = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
+        setFirstName(value);
+    };
+
+    const handleLastNameChange = (e) => {
+        const value = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
+        setLastName(value);
+    };
+
     const total = cartItems.reduce((sum, item) => sum + parseFloat(item.price || 0), 0);
 
     return (
         <div>
             <NavBar />
+            {loading && (
+                <div className="loading-screen">
+                    <p>Loading...</p>
+                </div>
+            )}
+            {paymentSuccess && (
+                <div className="payment-success">
+                    <p>Payment successful! Thank you for shopping.</p>
+                </div>
+            )}
             <div className="cart-container">
                 <h2>Cart</h2>
                 <div className="payment-method">
@@ -131,10 +175,25 @@ const Cart = () => {
                     <div className="payment-form">
                         <h3>Enter Payment Details</h3>
                         <div className="credit-card">
+                            {cardType === 'visa' && <img src="/path/to/visa-logo.png" alt="Visa" className="card-logo" />}
+                            {cardType === 'mastercard' && <img src="/path/to/mastercard-logo.png" alt="MasterCard" className="card-logo" />}
                             <div className="card-number">{cardNumber.padEnd(16, '•')}</div>
                             <div className="expiry-date">{expiryDate.padEnd(5, '•')}</div>
                             <div className="cvv">{cvv.padEnd(3, '•')}</div>
+                            <div className="name">{`${firstName} ${lastName}`}</div>
                         </div>
+                        <input
+                            type="text"
+                            placeholder="First Name"
+                            value={firstName}
+                            onChange={handleFirstNameChange}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Last Name"
+                            value={lastName}
+                            onChange={handleLastNameChange}
+                        />
                         <input
                             type="text"
                             placeholder="Card Number"
