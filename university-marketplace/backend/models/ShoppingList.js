@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database'); // Ensure this path is correct
-const User = require('./User'); // Ensure this path is correct
+const sequelize = require('../config/database');
+const User = require('./User');
 
 const ShoppingList = sequelize.define('ShoppingList', {
     id: {
@@ -24,6 +24,10 @@ const ShoppingList = sequelize.define('ShoppingList', {
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 1,
+    },
+    price: {  // Add this field
+        type: DataTypes.FLOAT,
+        allowNull: false,
     },
 }, {
     tableName: 'shopping_lists',

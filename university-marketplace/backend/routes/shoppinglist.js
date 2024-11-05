@@ -5,19 +5,18 @@ const isUserOrAdmin = require('../middlewares/isAdmin'); // Ensure you have this
 const router = express.Router();
 
 // Add item to shopping list
-router.post('/add', verifyToken, isUserOrAdmin, async (req, res) => {
-    const { itemName, quantity } = req.body;
-    const userId = req.user.id; // Use req.user.id
+router.post('/add', verifyToken, async (req, res) => {
+    const { itemName, quantity, price } = req.body;
+    const userId = req.user.id;
 
-    // Log the request body for debugging
     console.log('Request body:', req.body);
 
-    if (!itemName || !quantity) {
-        return res.status(400).json({ message: 'itemName and quantity are required' });
+    if (!itemName || !quantity || price == null) {
+        return res.status(400).json({ message: 'itemName, quantity, and price are required' });
     }
 
     try {
-        const newItem = await ShoppingList.create({ userId, itemName, quantity: quantity || 1 });
+        const newItem = await ShoppingList.create({ userId, itemName, quantity, price });
         res.status(201).json({ message: 'Item added to shopping list', item: newItem });
     } catch (error) {
         console.error('Error adding item to shopping list:', error);
