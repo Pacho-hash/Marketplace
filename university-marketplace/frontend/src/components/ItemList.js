@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './ItemList.css'; // Import the CSS file
-import NavBar from './NavBar'; // Adjust the path as needed
-import ShoppingList from './ShoppingList'; // Import ShoppingList component
+import './ItemList.css';
+import NavBar from './NavBar';
+import ShoppingList from './ShoppingList';
 
 const ItemList = () => {
     const [items, setItems] = useState([]);
@@ -40,15 +40,22 @@ const ItemList = () => {
                 console.error('Error fetching shopping list:', error);
             }
         };
+
         fetchItems();
         fetchShoppingList();
+
+        // Polling mechanism to update the shopping list every 30 seconds
+        const interval = setInterval(fetchShoppingList, 0);
+
+        // Clear interval on component unmount
+        return () => clearInterval(interval);
     }, []);
 
     const addToShoppingList = async (item) => {
         try {
             const response = await axios.post(
                 'http://localhost:5000/shopping-list/add',
-                { itemName: item.title, quantity: 1, price: item.price }, // Include price
+                { itemName: item.title, quantity: 1, price: item.price },
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
