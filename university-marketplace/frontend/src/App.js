@@ -14,6 +14,8 @@ import { isAuthenticated } from './utils/auth';
 import AdminPanel from './components/AdminPanel';
 import ItemManagement from './components/ItemManagement';
 import ShoppingList from './components/ShoppingList';
+import Cart from './components/Cart'; 
+
 
 
 import './styles.css';
@@ -38,6 +40,8 @@ const App = () => {
                     <Route path="/admin-panel" element={<AdminPanel />} />
                     <Route path="/item-management" element={<ItemManagement />} />
                     <Route path="/shopping-list" element={<ShoppingList />} />
+                    <Route path="/cart" element={<Cart />} />
+
 
                 </Routes>
             </div>

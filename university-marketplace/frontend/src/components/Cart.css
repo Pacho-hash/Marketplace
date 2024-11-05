@@ -1,0 +1,31 @@
+.cart-container {
+    padding: 20px;
+    margin-top: 60px; /* Adjust for the fixed navbar */
+}
+
+.payment-method {
+    margin-bottom: 20px;
+}
+
+.cart-items ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.cart-items li {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.remove-button {
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.cart-total {
+    margin-top: 20px;
+}

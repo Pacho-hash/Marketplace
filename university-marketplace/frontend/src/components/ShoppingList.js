@@ -1,8 +1,10 @@
 import React from 'react';
 import './ShoppingList.css';
+import { useNavigate } from 'react-router-dom';
 
 const ShoppingList = ({ shoppingList, removeItem }) => {
     const total = shoppingList.reduce((sum, item) => sum + parseFloat(item.price || 0), 0);
+    const navigate = useNavigate();
 
     return (
         <div className="shopping-list-container">
@@ -25,6 +27,7 @@ const ShoppingList = ({ shoppingList, removeItem }) => {
             </div>
             <div className="shopping-list-total">
                 <h3>Total: ${total.toFixed(2)}</h3>
+                <button className="go-to-cart-button" onClick={() => navigate('/cart')}>Go to Cart</button>
             </div>
         </div>
     );
