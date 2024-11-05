@@ -6,6 +6,9 @@ import './Cart.css';
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
     const [paymentMethod, setPaymentMethod] = useState('online');
+    const [cardNumber, setCardNumber] = useState('');
+    const [expiryDate, setExpiryDate] = useState('');
+    const [cvv, setCvv] = useState('');
     const token = localStorage.getItem('token');
 
     useEffect(() => {
@@ -42,6 +45,38 @@ const Cart = () => {
         setPaymentMethod(event.target.value);
     };
 
+    const handlePayNow = async () => {
+        try {
+            // Simulate payment process
+            await axios.post('http://localhost:5000/auth/payment', {
+                cartItems,
+                paymentDetails: {
+                    cardNumber,
+                    expiryDate,
+                    cvv,
+                },
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            // Clear cart items from database
+            await axios.delete('http://localhost:5000/shopping-list/clear', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            // Clear cart items in the frontend
+            setCartItems([]);
+            alert('Payment successful!');
+        } catch (error) {
+            console.error('Error processing payment:', error);
+            alert('Payment failed. Please try again.');
+        }
+    };
+
     const total = cartItems.reduce((sum, item) => sum + parseFloat(item.price || 0), 0);
 
     return (
@@ -69,6 +104,30 @@ const Cart = () => {
                         Pay on Delivery
                     </label>
                 </div>
+                {paymentMethod === 'online' && (
+                    <div className="payment-form">
+                        <h3>Enter Payment Details</h3>
+                        <input
+                            type="text"
+                            placeholder="Card Number"
+                            value={cardNumber}
+                            onChange={(e) => setCardNumber(e.target.value)}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Expiry Date (MM/YY)"
+                            value={expiryDate}
+                            onChange={(e) => setExpiryDate(e.target.value)}
+                        />
+                        <input
+                            type="text"
+                            placeholder="CVV"
+                            value={cvv}
+                            onChange={(e) => setCvv(e.target.value)}
+                        />
+                        <button className="pay-now-button" onClick={handlePayNow}>Pay Now</button>
+                    </div>
+                )}
                 <div className="cart-items">
                     {cartItems.length > 0 ? (
                         <ul>
