@@ -8,6 +8,7 @@ const ItemList = () => {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [shoppingList, setShoppingList] = useState([]);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         const fetchItems = async () => {
@@ -27,14 +28,13 @@ const ItemList = () => {
                 console.error('No token found');
                 return;
             }
-        
+
             try {
                 const response = await axios.get('http://localhost:5000/shopping-list', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                console.log('Fetched shopping list:', response.data); // Log fetched data
                 setShoppingList(response.data);
             } catch (error) {
                 console.error('Error fetching shopping list:', error);
@@ -43,12 +43,6 @@ const ItemList = () => {
 
         fetchItems();
         fetchShoppingList();
-
-        // Polling mechanism to update the shopping list every 30 seconds
-        const interval = setInterval(fetchShoppingList, 0);
-
-        // Clear interval on component unmount
-        return () => clearInterval(interval);
     }, []);
 
     const addToShoppingList = async (item) => {
@@ -62,11 +56,15 @@ const ItemList = () => {
                     },
                 }
             );
-            setShoppingList([...shoppingList, { ...item, id: response.data.item.id }]); // Ensure unique id
+            const newItem = response.data.item;
+            setShoppingList([...shoppingList, newItem]);
+            setError(''); // Clear any previous error
         } catch (error) {
             console.error('Error adding item to shopping list:', error);
+            setError(error.response?.data?.message || 'Failed to add item to shopping list');
         }
     };
+
     const removeItemFromShoppingList = async (itemId) => {
         try {
             await axios.delete(`http://localhost:5000/shopping-list/remove/${itemId}`, {
@@ -75,10 +73,12 @@ const ItemList = () => {
                 },
             });
             setShoppingList(shoppingList.filter(item => item.id !== itemId));
+            setError(''); // Clear any previous error
         } catch (error) {
             console.error('Error removing item from shopping list:', error);
         }
     };
+
     if (loading) {
         return <div className="item-list-container">Loading...</div>;
     }
@@ -88,6 +88,7 @@ const ItemList = () => {
             <NavBar shoppingList={shoppingList} />
             <div className="item-list-content">
                 <h2>Item Listings</h2>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
                 <div className="item-list-grid">
                     {items.length > 0 ? (
                         items.map((item) => (
