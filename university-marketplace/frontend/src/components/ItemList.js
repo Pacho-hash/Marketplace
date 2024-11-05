@@ -22,34 +22,40 @@ const ItemList = () => {
         };
 
         const fetchShoppingList = async () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('No token found');
+                return;
+            }
+        
             try {
                 const response = await axios.get('http://localhost:5000/shopping-list', {
                     headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                        Authorization: `Bearer ${token}`,
                     },
                 });
+                console.log('Fetched shopping list:', response.data); // Log fetched data
                 setShoppingList(response.data);
             } catch (error) {
                 console.error('Error fetching shopping list:', error);
             }
         };
-
         fetchItems();
         fetchShoppingList();
     }, []);
 
     const addToShoppingList = async (item) => {
         try {
-            await axios.post(
+            const response = await axios.post(
                 'http://localhost:5000/shopping-list/add',
-                { itemId: item.id },
+                { itemName: item.title, quantity: 1 },
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
                     },
                 }
             );
-            setShoppingList([...shoppingList, item]);
+            setShoppingList([...shoppingList, { ...item, id: response.data.item.id }]); // Ensure unique id
         } catch (error) {
             console.error('Error adding item to shopping list:', error);
         }

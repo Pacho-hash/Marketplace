@@ -13,6 +13,8 @@ import UserDashboard from './components/UserDashboard';
 import { isAuthenticated } from './utils/auth'; 
 import AdminPanel from './components/AdminPanel';
 import ItemManagement from './components/ItemManagement';
+import ShoppingList from './components/ShoppingList';
+
 
 import './styles.css';
 
@@ -35,6 +37,8 @@ const App = () => {
                     />
                     <Route path="/admin-panel" element={<AdminPanel />} />
                     <Route path="/item-management" element={<ItemManagement />} />
+                    <Route path="/shopping-list" element={<ShoppingList />} />
+
                 </Routes>
             </div>
         </Router>

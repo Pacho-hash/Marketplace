@@ -2,7 +2,7 @@ import React from 'react';
 import './ShoppingList.css'; // Create and import CSS for styling
 
 const ShoppingList = ({ shoppingList }) => {
-    const total = shoppingList.reduce((sum, item) => sum + parseFloat(item.price), 0);
+    const total = shoppingList.reduce((sum, item) => sum + parseFloat(item.price || 0), 0); // Ensure price is handled correctly
 
     return (
         <div className="shopping-list-container">
@@ -12,8 +12,9 @@ const ShoppingList = ({ shoppingList }) => {
                     <ul>
                         {shoppingList.map((item) => (
                             <li key={item.id}>
-                                <h3>{item.title}</h3>
-                                <p>Price: ${item.price}</p>
+                                <h3>{item.itemName}</h3> {/* Use itemName */}
+                                <p>Quantity: {item.quantity}</p>
+                                <p>Price: ${item.price || 'N/A'}</p> {/* Ensure price is displayed */}
                             </li>
                         ))}
                     </ul>
