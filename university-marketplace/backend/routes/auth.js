@@ -140,24 +140,7 @@ router.post('/create-item', verifyToken, async (req, res) => {
     }
 });
 
-// Add item to shopping list route
-router.post('/shopping-list/add', verifyToken, isUserOrAdmin, async (req, res) => {
-    const { itemId, itemName } = req.body;
-    const userId = req.userId;
 
-    try {
-        if (!userId || !itemId || !itemName) {
-            return res.status(400).json({ message: 'userId, itemId, and itemName are required' });
-        }
-
-        // Add item to the user's shopping list
-        const shoppingListItem = await ShoppingList.create({ userId, itemId, itemName });
-        res.status(201).json({ message: 'Item added to shopping list', shoppingListItem });
-    } catch (error) {
-        console.error('Error adding item to shopping list:', error);
-        res.status(500).json({ message: 'Server error', error: error.message });
-    }
-});
 
 
 // Change Password route
