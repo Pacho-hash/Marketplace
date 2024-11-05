@@ -10,7 +10,7 @@
     z-index: 1000;
     display: flex;
     flex-direction: column;
-    height: calc(60vh - 130px); /* Adjust based on your navbar height */
+    height: calc(100vh - 130px); /* Adjust based on your navbar height */
 }
 
 .shopping-list-items {

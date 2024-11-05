@@ -48,7 +48,7 @@ const ItemList = () => {
         try {
             const response = await axios.post(
                 'http://localhost:5000/shopping-list/add',
-                { itemName: item.title, quantity: 1 },
+                { itemName: item.title, quantity: 1, price: item.price }, // Include price
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,

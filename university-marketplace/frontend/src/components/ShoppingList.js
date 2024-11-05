@@ -2,7 +2,7 @@ import React from 'react';
 import './ShoppingList.css'; // Create and import CSS for styling
 
 const ShoppingList = ({ shoppingList }) => {
-    const total = shoppingList.reduce((sum, item) => sum + parseFloat(item.price || 0), 0); // Ensure price is handled correctly
+    const total = shoppingList.reduce((sum, item) => sum + parseFloat(item.price || 0), 0);
 
     return (
         <div className="shopping-list-container">
