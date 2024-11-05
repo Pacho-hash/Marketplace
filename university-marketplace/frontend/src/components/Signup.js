@@ -7,17 +7,24 @@ const Signup = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');  // New state for phone number
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
 
     const handleSignup = async (e) => {
         e.preventDefault();
         setLoading(true);
+        if (!phoneNumber.startsWith('0090')) {  // Phone number validation
+            setMessage('Phone number must start with 0090');
+            setLoading(false);
+            return;
+        }
         try {
             const response = await axios.post('http://localhost:5000/auth/signup', {
                 username,
                 email,
-                password
+                password,
+                phoneNumber  // Include phone number in signup request
             });
             setMessage(response.data.message || 'Signup successful!');
             setLoading(false);
@@ -59,6 +66,16 @@ const Signup = () => {
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            required
+                            className="input"
+                        />
+                    </div>
+                    <div className="input-group">  {/* New input group for phone number */}
+                        <label className="label">Phone Number:</label>
+                        <input
+                            type="text"
+                            value={phoneNumber}
+                            onChange={(e) => setPhoneNumber(e.target.value)}
                             required
                             className="input"
                         />

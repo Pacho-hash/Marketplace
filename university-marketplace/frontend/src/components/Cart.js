@@ -50,7 +50,7 @@ const Cart = () => {
             <div className="cart-container">
                 <h2>Cart</h2>
                 <div className="payment-method">
-                    <label>
+                    <label className={`payment-option ${paymentMethod === 'online' ? 'selected' : ''}`}>
                         <input
                             type="radio"
                             value="online"
@@ -59,7 +59,7 @@ const Cart = () => {
                         />
                         Pay Online
                     </label>
-                    <label>
+                    <label className={`payment-option ${paymentMethod === 'delivery' ? 'selected' : ''}`}>
                         <input
                             type="radio"
                             value="delivery"
@@ -73,10 +73,12 @@ const Cart = () => {
                     {cartItems.length > 0 ? (
                         <ul>
                             {cartItems.map((item) => (
-                                <li key={item.id}>
-                                    <h3>{item.itemName}</h3>
-                                    <p>Quantity: {item.quantity}</p>
-                                    <p>Price: ${item.price || 'N/A'}</p>
+                                <li key={item.id} className="cart-item">
+                                    <div className="item-details">
+                                        <h3>{item.itemName}</h3>
+                                        <p>Quantity: {item.quantity}</p>
+                                        <p>Price: ${item.price || 'N/A'}</p>
+                                    </div>
                                     <button className="remove-button" onClick={() => removeItemFromCart(item.id)}>Remove</button>
                                 </li>
                             ))}

@@ -7,6 +7,7 @@ import './Profile.css';
 const Profile = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');  // New state for phone number
     const [message, setMessage] = useState('');
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -22,6 +23,7 @@ const Profile = () => {
                 });
                 setUsername(response.data.username);
                 setEmail(response.data.email);
+                setPhoneNumber(response.data.phone_number); // Set phone number from response
             } catch (error) {
                 console.error('Error fetching profile:', error);
                 navigate('/login'); // Redirect to login if not authenticated
@@ -33,8 +35,12 @@ const Profile = () => {
     const handleUpdateProfile = async (e) => {
         e.preventDefault();
         const token = localStorage.getItem('token');
+        if (!phoneNumber.startsWith('0090')) {  // Phone number validation
+            setMessage('Phone number must start with 0090');
+            return;
+        }
         try {
-            const response = await axios.put('http://localhost:5000/auth/profile', { username, email }, {
+            const response = await axios.put('http://localhost:5000/auth/profile', { username, email, phoneNumber }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setMessage(response.data.message);
@@ -85,6 +91,15 @@ const Profile = () => {
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Phone Number:</label>  {/* New input group for phone number */}
+                        <input
+                            type="text"
+                            value={phoneNumber}
+                            onChange={(e) => setPhoneNumber(e.target.value)}
                             required
                         />
                     </div>
