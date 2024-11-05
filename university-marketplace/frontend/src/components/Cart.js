@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavBar from '../components/NavBar';
 import './Cart.css';
+import './CreditCard.css'; // Add appropriate CSS styling for the credit card
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
@@ -77,6 +78,23 @@ const Cart = () => {
         }
     };
 
+    const handleCardNumberChange = (e) => {
+        const value = e.target.value.replace(/\D/g, '').slice(0, 16);
+        setCardNumber(value);
+    };
+
+    const handleExpiryDateChange = (e) => {
+        const value = e.target.value.replace(/\D/g, '');
+        if (value.length <= 4) {
+            setExpiryDate(value.replace(/(\d{2})(\d{0,2})/, '$1/$2'));
+        }
+    };
+
+    const handleCvvChange = (e) => {
+        const value = e.target.value.replace(/\D/g, '').slice(0, 3);
+        setCvv(value);
+    };
+
     const total = cartItems.reduce((sum, item) => sum + parseFloat(item.price || 0), 0);
 
     return (
@@ -107,23 +125,28 @@ const Cart = () => {
                 {paymentMethod === 'online' && (
                     <div className="payment-form">
                         <h3>Enter Payment Details</h3>
+                        <div className="credit-card">
+                            <div className="card-number">{cardNumber.padEnd(16, '•')}</div>
+                            <div className="expiry-date">{expiryDate.padEnd(5, '•')}</div>
+                            <div className="cvv">{cvv.padEnd(3, '•')}</div>
+                        </div>
                         <input
                             type="text"
                             placeholder="Card Number"
                             value={cardNumber}
-                            onChange={(e) => setCardNumber(e.target.value)}
+                            onChange={handleCardNumberChange}
                         />
                         <input
                             type="text"
                             placeholder="Expiry Date (MM/YY)"
                             value={expiryDate}
-                            onChange={(e) => setExpiryDate(e.target.value)}
+                            onChange={handleExpiryDateChange}
                         />
                         <input
                             type="text"
                             placeholder="CVV"
                             value={cvv}
-                            onChange={(e) => setCvv(e.target.value)}
+                            onChange={handleCvvChange}
                         />
                         <button className="pay-now-button" onClick={handlePayNow}>Pay Now</button>
                     </div>

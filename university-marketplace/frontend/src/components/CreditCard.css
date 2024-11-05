@@ -1,0 +1,36 @@
+.credit-card {
+    width: 300px;
+    height: 180px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.credit-card .card-number,
+.credit-card .expiry-date,
+.credit-card .cvv {
+    font-size: 18px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.credit-card .card-number {
+    position: absolute;
+    top: 50px;
+    left: 20px;
+}
+
+.credit-card .expiry-date {
+    position: absolute;
+    bottom: 30px;
+    left: 20px;
+}
+
+.credit-card .cvv {
+    position: absolute;
+    bottom: 30px;
+    right: 20px;
+}
