@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavBar from '../components/NavBar';
 import './Cart.css';
-import './CreditCard.css'; // Add appropriate CSS styling for the credit card
+import './CreditCard.css'; 
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
@@ -47,6 +47,11 @@ const Cart = () => {
     };
 
     const handlePayNow = async () => {
+        if (!cardNumber || cardNumber.length !== 16 || !expiryDate || expiryDate.length !== 5 || !cvv || cvv.length !== 3) {
+            alert('Please fill in all payment details correctly.');
+            return;
+        }
+
         try {
             // Simulate payment process
             await axios.post('http://localhost:5000/auth/payment', {
