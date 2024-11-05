@@ -43,3 +43,16 @@
     padding-top: 10px;
     background-color: #fff;
 }
+/* ShoppingList.css */
+
+.remove-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.remove-button:hover {
+    background-color: darkred;
+}

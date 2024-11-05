@@ -1,7 +1,7 @@
 import React from 'react';
-import './ShoppingList.css'; // Create and import CSS for styling
+import './ShoppingList.css';
 
-const ShoppingList = ({ shoppingList }) => {
+const ShoppingList = ({ shoppingList, removeItem }) => {
     const total = shoppingList.reduce((sum, item) => sum + parseFloat(item.price || 0), 0);
 
     return (
@@ -12,9 +12,10 @@ const ShoppingList = ({ shoppingList }) => {
                     <ul>
                         {shoppingList.map((item) => (
                             <li key={item.id}>
-                                <h3>{item.itemName}</h3> {/* Use itemName */}
+                                <h3>{item.itemName}</h3>
                                 <p>Quantity: {item.quantity}</p>
-                                <p>Price: ${item.price || 'N/A'}</p> {/* Ensure price is displayed */}
+                                <p>Price: ${item.price || 'N/A'}</p>
+                                <button className="remove-button" onClick={() => removeItem(item.id)}>Remove</button>
                             </li>
                         ))}
                     </ul>

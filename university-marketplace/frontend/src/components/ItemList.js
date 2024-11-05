@@ -67,7 +67,18 @@ const ItemList = () => {
             console.error('Error adding item to shopping list:', error);
         }
     };
-
+    const removeItemFromShoppingList = async (itemId) => {
+        try {
+            await axios.delete(`http://localhost:5000/shopping-list/remove/${itemId}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+            setShoppingList(shoppingList.filter(item => item.id !== itemId));
+        } catch (error) {
+            console.error('Error removing item from shopping list:', error);
+        }
+    };
     if (loading) {
         return <div className="item-list-container">Loading...</div>;
     }
@@ -107,7 +118,7 @@ const ItemList = () => {
                     )}
                 </div>
             </div>
-            <ShoppingList shoppingList={shoppingList} />
+            <ShoppingList shoppingList={shoppingList} removeItem={removeItemFromShoppingList} />
         </div>
     );
 };
