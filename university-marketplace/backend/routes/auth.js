@@ -39,14 +39,17 @@ const isUserOrAdmin = async (req, res, next) => {
 
 // Signup route
 router.post('/signup', async (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, email, password, phoneNumber } = req.body;
     try {
         const existingUser = await User.findOne({ where: { email } });
         if (existingUser) {
             return res.status(400).json({ message: 'User already exists' });
         }
+        if (!phoneNumber.startsWith('0090')) {
+            return res.status(400).json({ message: 'Phone number must start with +90' });
+        }
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = await User.create({ username, email, password: hashedPassword });
+        const newUser = await User.create({ username, email, password: hashedPassword, phone_number: phoneNumber });
         return res.status(201).json({ message: 'User created', user: newUser });
     } catch (error) {
         console.error('Error creating account:', error);
@@ -75,7 +78,7 @@ router.post('/login', async (req, res) => {
 });
 
 
-// Get user profile route
+//Get user profile route
 router.get('/profile', verifyToken, async (req, res) => {
     try {
         const user = await User.findByPk(req.userId);
@@ -92,24 +95,26 @@ router.get('/profile', verifyToken, async (req, res) => {
 
 // Update user profile route
 router.put('/profile', verifyToken, async (req, res) => {
-    const { username, email } = req.body;
-
+    const { username, email, phoneNumber } = req.body;
     try {
         const user = await User.findByPk(req.userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-
+        if (phoneNumber && !phoneNumber.startsWith('0090')) {
+            return res.status(400).json({ message: 'Phone number must start with +90' });
+        }
         user.username = username || user.username;
         user.email = email || user.email;
+        user.phone_number = phoneNumber || user.phone_number;
         await user.save();
-
         res.json({ message: 'Profile updated successfully', user });
     } catch (error) {
         console.error('Error updating user profile:', error);
         res.status(500).json({ message: 'Error updating user profile' });
     }
 });
+
 
 router.post('/create-item', verifyToken, async (req, res) => {
     const { title, description, price, quantity } = req.body; // Include quantity
