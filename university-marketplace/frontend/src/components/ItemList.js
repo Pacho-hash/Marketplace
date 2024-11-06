@@ -6,19 +6,19 @@ import ShoppingList from './ShoppingList';
 
 const ItemList = () => {
     const [items, setItems] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState('');
     const [shoppingList, setShoppingList] = useState([]);
     const [error, setError] = useState('');
-    const [categories, setCategories] = useState([]); // State for categories
-    const [selectedCategory, setSelectedCategory] = useState(''); // State for selected category
+    const [loading, setLoading] = useState(true);
+    const [isShoppingListOpen, setIsShoppingListOpen] = useState(false);
 
     useEffect(() => {
         const fetchItems = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/items/all');
+                const response = await axios.get('http://localhost:5000/items');
                 setItems(response.data);
                 setLoading(false);
-                setCategories([...new Set(response.data.map(item => item.category))]); // Extract unique categories
             } catch (error) {
                 console.error('Error fetching items:', error);
                 setLoading(false);
@@ -26,16 +26,10 @@ const ItemList = () => {
         };
 
         const fetchShoppingList = async () => {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                console.error('No token found');
-                return;
-            }
-
             try {
                 const response = await axios.get('http://localhost:5000/shopping-list', {
                     headers: {
-                        Authorization: `Bearer ${token}`,
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
                     },
                 });
                 setShoppingList(response.data);
@@ -44,8 +38,18 @@ const ItemList = () => {
             }
         };
 
+        const fetchCategories = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/categories');
+                setCategories(response.data);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
+
         fetchItems();
         fetchShoppingList();
+        fetchCategories();
     }, []);
 
     const addToShoppingList = async (item) => {
@@ -86,6 +90,10 @@ const ItemList = () => {
         setSelectedCategory(e.target.value);
     };
 
+    const toggleShoppingList = () => {
+        setIsShoppingListOpen(!isShoppingListOpen);
+    };
+
     const filteredItems = selectedCategory
         ? items.filter(item => item.category === selectedCategory)
         : items;
@@ -98,49 +106,56 @@ const ItemList = () => {
         <div className="item-list-page">
             <NavBar shoppingList={shoppingList} />
             <div className="item-list-content">
-                <h2>Item Listings</h2>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-                <div className="filter-container">
-                    <label htmlFor="category-filter">Filter by Category:</label>
-                    <select id="category-filter" value={selectedCategory} onChange={handleCategoryChange}>
-                        <option value="">All Categories</option>
+                <div className="sidebar">
+                    <h3>Categories</h3>
+                    <ul className="category-list">
+                        <li onClick={() => setSelectedCategory('')}>All Categories</li>
                         {categories.map((category, index) => (
-                            <option key={index} value={category}>{category}</option>
+                            <li key={index} onClick={() => setSelectedCategory(category)}>{category}</li>
                         ))}
-                    </select>
+                    </ul>
                 </div>
-                <div className="item-list-grid">
-                    {filteredItems.length > 0 ? (
-                        filteredItems.map((item) => (
-                            <div key={item.id} className="item-card">
-                                {item.imageUrl && (
-                                    <img
-                                        src={item.imageUrl}
-                                        alt={item.title}
-                                        className="item-image"
-                                    />
-                                )}
-                                <div className="item-info">
-                                    <h3>{item.title}</h3>
-                                    <p>{item.description}</p>
-                                    <p className="item-price">Price: ${item.price}</p>
-                                    <p className="item-quantity">Quantity: {item.quantity}</p>
-                                    <p className="item-category">Category: {item.category}</p> {/* Display category */}
-                                    <p className="item-user">
-                                        Posted by: {item.user ? item.user.username : 'Unknown'}
-                                    </p>
-                                    <button onClick={() => addToShoppingList(item)}>
-                                        Add to Shopping List
-                                    </button>
+                <div className="main-content">
+                    <h2>Item Listings</h2>
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
+                    <div className="item-list-grid">
+                        {filteredItems.length > 0 ? (
+                            filteredItems.map((item) => (
+                                <div key={item.id} className="item-card">
+                                    {item.imageUrl && (
+                                        <img
+                                            src={item.imageUrl}
+                                            alt={item.title}
+                                            className="item-image"
+                                        />
+                                    )}
+                                    <div className="item-info">
+                                        <h3>{item.title}</h3>
+                                        <p>{item.description}</p>
+                                        <p className="item-price">Price: ${item.price}</p>
+                                        <p className="item-quantity">Quantity: {item.quantity}</p>
+                                        <p className="item-category">Category: {item.category}</p>
+                                        <p className="item-user">
+                                            Posted by: {item.user ? item.user.username : 'Unknown'}
+                                        </p>
+                                        <button onClick={() => addToShoppingList(item)}>
+                                            Add to Shopping List
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        ))
-                    ) : (
-                        <p className="no-items">No items available</p>
-                    )}
+                            ))
+                        ) : (
+                            <p className="no-items">No items available</p>
+                        )}
+                    </div>
                 </div>
             </div>
-            <ShoppingList shoppingList={shoppingList} removeItem={removeItemFromShoppingList} />
+            <button className="toggle-shopping-list" onClick={toggleShoppingList}>
+                {isShoppingListOpen ? 'Close Shopping List' : 'Open Shopping List'}
+            </button>
+            {isShoppingListOpen && (
+                <ShoppingList shoppingList={shoppingList} removeItem={removeItemFromShoppingList} />
+            )}
         </div>
     );
 };
