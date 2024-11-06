@@ -9,6 +9,8 @@ const ItemList = () => {
     const [loading, setLoading] = useState(true);
     const [shoppingList, setShoppingList] = useState([]);
     const [error, setError] = useState('');
+    const [categories, setCategories] = useState([]); // State for categories
+    const [selectedCategory, setSelectedCategory] = useState(''); // State for selected category
 
     useEffect(() => {
         const fetchItems = async () => {
@@ -16,6 +18,7 @@ const ItemList = () => {
                 const response = await axios.get('http://localhost:5000/items/all');
                 setItems(response.data);
                 setLoading(false);
+                setCategories([...new Set(response.data.map(item => item.category))]); // Extract unique categories
             } catch (error) {
                 console.error('Error fetching items:', error);
                 setLoading(false);
@@ -79,6 +82,14 @@ const ItemList = () => {
         }
     };
 
+    const handleCategoryChange = (e) => {
+        setSelectedCategory(e.target.value);
+    };
+
+    const filteredItems = selectedCategory
+        ? items.filter(item => item.category === selectedCategory)
+        : items;
+
     if (loading) {
         return <div className="item-list-container">Loading...</div>;
     }
@@ -89,9 +100,18 @@ const ItemList = () => {
             <div className="item-list-content">
                 <h2>Item Listings</h2>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
+                <div className="filter-container">
+                    <label htmlFor="category-filter">Filter by Category:</label>
+                    <select id="category-filter" value={selectedCategory} onChange={handleCategoryChange}>
+                        <option value="">All Categories</option>
+                        {categories.map((category, index) => (
+                            <option key={index} value={category}>{category}</option>
+                        ))}
+                    </select>
+                </div>
                 <div className="item-list-grid">
-                    {items.length > 0 ? (
-                        items.map((item) => (
+                    {filteredItems.length > 0 ? (
+                        filteredItems.map((item) => (
                             <div key={item.id} className="item-card">
                                 {item.imageUrl && (
                                     <img
@@ -105,6 +125,7 @@ const ItemList = () => {
                                     <p>{item.description}</p>
                                     <p className="item-price">Price: ${item.price}</p>
                                     <p className="item-quantity">Quantity: {item.quantity}</p>
+                                    <p className="item-category">Category: {item.category}</p> {/* Display category */}
                                     <p className="item-user">
                                         Posted by: {item.user ? item.user.username : 'Unknown'}
                                     </p>

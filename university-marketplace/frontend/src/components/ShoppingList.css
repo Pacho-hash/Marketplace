@@ -2,7 +2,8 @@
     position: fixed;
     top: 70px; /* Adjust based on your navbar height */
     right: 5px;
-    width: 300px;
+    width: 100%; /* Make the container responsive */
+    max-width: 300px; /* Set a maximum width */
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -51,8 +52,16 @@
     border: none;
     padding: 5px 10px;
     cursor: pointer;
+    border-radius: 3px;
 }
 
 .remove-button:hover {
     background-color: darkred;
+}
+
+@media (max-width: 600px) {
+    .shopping-list-container {
+        width: 90%; /* Adjust width for smaller screens */
+        right: 5%;
+    }
 }

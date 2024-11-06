@@ -8,8 +8,9 @@ const CreateItem = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
-    const [quantity, setQuantity] = useState(''); // New state for quantity
+    const [quantity, setQuantity] = useState('');
     const [image, setImage] = useState(null);
+    const [category, setCategory] = useState(''); // New state for category
     const [message, setMessage] = useState('');
 
     const handleImageChange = (e) => {
@@ -23,7 +24,7 @@ const CreateItem = () => {
         console.log("Token:", token); // Log the token for debugging
         
         // Check if all fields are filled out
-        if (!title || !description || !price || !quantity) {
+        if (!title || !description || !price || !quantity || !category) {
             setMessage('Please fill out all fields.');
             return;
         }
@@ -32,7 +33,8 @@ const CreateItem = () => {
         formData.append('title', title);
         formData.append('description', description);
         formData.append('price', price);
-        formData.append('quantity', quantity); // Append quantity to form data
+        formData.append('quantity', quantity);
+        formData.append('category', category); // Append category to form data
         if (image) {
             formData.append('image', image);
         }
@@ -54,7 +56,8 @@ const CreateItem = () => {
             setTitle('');
             setDescription('');
             setPrice('');
-            setQuantity(''); // Reset quantity field
+            setQuantity('');
+            setCategory(''); // Reset category field
             setImage(null);
         } catch (error) {
             console.error('Error creating item:', error); // Log error object
@@ -104,6 +107,21 @@ const CreateItem = () => {
                             onChange={(e) => setQuantity(e.target.value)}
                             required
                         />
+                    </div>
+                    <div className="form-group">
+                        <label>Category:</label>
+                        <select
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                            required
+                        >
+                            <option value="">Select category</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Books">Books</option>
+                            <option value="Clothing">Clothing</option>
+                            <option value="Furniture">Furniture</option>
+                            <option value="Other">Other</option>
+                        </select>
                     </div>
                     <div className="form-group">
                         <label>Image:</label>

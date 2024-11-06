@@ -6,7 +6,7 @@
     align-items: center;
     padding: 20px;
     background-color: #f5f5f5;
-    min-height: 100vh;
+    height: auto; 
 }
 
 .item-list-content {
@@ -50,7 +50,7 @@ h2 {
 }
 
 .item-info h3 {
-    color: #8B0000; /* Dark red for item titles */
+    color: #8B0000; 
     font-size: 1.5rem;
     margin-bottom: 10px;
 }
