@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './CreateItem.css';
-import '../styles.css';
 import NavBar from './NavBar';
 
 const CreateItem = () => {
@@ -9,8 +8,8 @@ const CreateItem = () => {
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
     const [quantity, setQuantity] = useState('');
+    const [category, setCategory] = useState('');
     const [image, setImage] = useState(null);
-    const [category, setCategory] = useState(''); // New state for category
     const [message, setMessage] = useState('');
 
     const handleImageChange = (e) => {
@@ -20,10 +19,9 @@ const CreateItem = () => {
     const handleCreateItem = async (e) => {
         e.preventDefault();
 
-        const token = localStorage.getItem('token'); 
-        console.log("Token:", token); // Log the token for debugging
-        
-        // Check if all fields are filled out
+        const token = localStorage.getItem('token');
+        console.log("Token:", token);
+
         if (!title || !description || !price || !quantity || !category) {
             setMessage('Please fill out all fields.');
             return;
@@ -34,14 +32,14 @@ const CreateItem = () => {
         formData.append('description', description);
         formData.append('price', price);
         formData.append('quantity', quantity);
-        formData.append('category', category); // Append category to form data
+        formData.append('category', category);
         if (image) {
             formData.append('image', image);
         }
 
         try {
             const response = await axios.post(
-                'http://localhost:5000/items/create-item', // Ensure this is correct
+                'http://localhost:5000/items/create-item',
                 formData,
                 {
                     headers: {
@@ -52,17 +50,15 @@ const CreateItem = () => {
             );
 
             setMessage(response.data.message || 'Item created successfully!');
-            // Reset form fields after successful submission
             setTitle('');
             setDescription('');
             setPrice('');
             setQuantity('');
-            setCategory(''); // Reset category field
+            setCategory('');
             setImage(null);
         } catch (error) {
-            console.error('Error creating item:', error); // Log error object
-            console.error('Detailed error:', error.stack); // Log stack trace
-            
+            console.error('Error creating item:', error);
+            console.error('Detailed error:', error.stack);
             setMessage(error.response?.data?.message || 'Error creating item');
         }
     };
