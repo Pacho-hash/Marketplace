@@ -15,8 +15,17 @@ const ItemList = () => {
 
     useEffect(() => {
         const fetchItems = async () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('No token found');
+                return;
+            }
             try {
-                const response = await axios.get('http://localhost:5000/items');
+                const response = await axios.get('http://localhost:5000/items', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
                 setItems(response.data);
                 setLoading(false);
             } catch (error) {
@@ -40,7 +49,7 @@ const ItemList = () => {
 
         const fetchCategories = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/categories');
+                const response = await axios.get('http://localhost:5000/items/categories');
                 setCategories(response.data);
             } catch (error) {
                 console.error('Error fetching categories:', error);
