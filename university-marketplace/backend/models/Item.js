@@ -32,6 +32,10 @@ const Item = sequelize.define('Item', {
         allowNull: false,
         defaultValue: 0,
     },
+    category: { 
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
 }, {
     tableName: 'items',
     timestamps: true,
