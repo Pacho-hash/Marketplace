@@ -3,6 +3,7 @@ import axios from 'axios';
 import './ItemList.css';
 import NavBar from './NavBar';
 import ShoppingList from './ShoppingList';
+import shoppingCartIcon from '../assets/shopping-cart.png'; 
 
 const ItemList = () => {
     const [items, setItems] = useState([]);
@@ -12,6 +13,7 @@ const ItemList = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
     const [isShoppingListOpen, setIsShoppingListOpen] = useState(false);
+    const [expandedItem, setExpandedItem] = useState(null);
 
     useEffect(() => {
         const fetchItems = async () => {
@@ -103,6 +105,15 @@ const ItemList = () => {
         setIsShoppingListOpen(!isShoppingListOpen);
     };
 
+    const handleItemClick = (itemId) => {
+        setExpandedItem(expandedItem === itemId ? null : itemId);
+    };
+
+    const truncateText = (text, maxLength) => {
+        if (text.length <= maxLength) return text;
+        return `${text.substring(0, maxLength)}...`;
+    };
+
     const filteredItems = selectedCategory
         ? items.filter(item => item.category === selectedCategory)
         : items;
@@ -130,7 +141,7 @@ const ItemList = () => {
                     <div className="item-list-grid">
                         {filteredItems.length > 0 ? (
                             filteredItems.map((item) => (
-                                <div key={item.id} className="item-card">
+                                <div key={item.id} className={`item-card ${expandedItem === item.id ? 'expanded' : ''}`} onClick={() => handleItemClick(item.id)}>
                                     {item.imageUrl && (
                                         <img
                                             src={item.imageUrl}
@@ -140,9 +151,9 @@ const ItemList = () => {
                                     )}
                                     <div className="item-info">
                                         <h3>{item.title}</h3>
-                                        <p>{item.description}</p>
+                                        <p>{expandedItem === item.id ? item.description : truncateText(item.description, 100)}</p>
                                         <p className="item-price">Price: ${item.price}</p>
-                                        <p className="item-quantity">Quantity: {item.quantity}</p>
+                                        <p className="item-quantity">Available: {item.quantity}</p>
                                         <p className="item-category">Category: {item.category}</p>
                                         <p className="item-user">
                                             Posted by: {item.user ? item.user.username : 'Unknown'}
@@ -159,8 +170,8 @@ const ItemList = () => {
                     </div>
                 </div>
             </div>
-            <button className="toggle-shopping-list" onClick={toggleShoppingList}>
-                {isShoppingListOpen ? 'Close Shopping List' : 'Open Shopping List'}
+            <button className="toggle-shopping-list bottom-right" onClick={toggleShoppingList}>
+                <img src={shoppingCartIcon} alt="Shopping List" className="shopping-list-icon" />
             </button>
             {isShoppingListOpen && (
                 <ShoppingList shoppingList={shoppingList} removeItem={removeItemFromShoppingList} />
