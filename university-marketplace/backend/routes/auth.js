@@ -300,4 +300,22 @@ router.get('/users', verifyToken, async (req, res) => {
     }
 });
 
+// Payment route
+router.post('/payment', verifyToken, async (req, res) => {
+    const { cartItems, paymentDetails } = req.body;
+
+    try {
+        // Simulate payment processing (this is where you would integrate with a real payment gateway)
+        console.log('Processing payment with details:', paymentDetails);
+
+        // Clear cart items from the database
+        await ShoppingList.destroy({ where: { userId: req.userId } });
+
+        res.status(200).json({ message: 'Payment successful and cart cleared' });
+    } catch (error) {
+        console.error('Error processing payment:', error);
+        res.status(500).json({ message: 'Error processing payment' });
+    }
+});
+
 module.exports = router;

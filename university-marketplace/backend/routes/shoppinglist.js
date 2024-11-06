@@ -64,4 +64,16 @@ router.delete('/remove/:id', verifyToken, async (req, res) => {
     }
 });
 
+// Clear shopping list
+router.delete('/clear', verifyToken, async (req, res) => {
+    const userId = req.user.id; // Use req.user.id
+
+    try {
+        await ShoppingList.destroy({ where: { userId } });
+        res.status(200).json({ message: 'Shopping list cleared' });
+    } catch (error) {
+        console.error('Error clearing shopping list:', error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
 module.exports = router;
