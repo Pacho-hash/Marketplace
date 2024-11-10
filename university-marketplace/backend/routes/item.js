@@ -112,4 +112,18 @@ router.put('/update-item/:id', verifyToken, async (req, res) => {
     }
 });
 
+// Add a route to fetch all categories
+router.get('/categories', async (req, res) => {
+    try {
+        const categories = await Item.findAll({
+            attributes: ['category'],
+            group: ['category']
+        });
+        res.json(categories.map(c => c.category));
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+        res.status(500).json({ message: 'Error fetching categories' });
+    }
+});
+
 module.exports = router;
