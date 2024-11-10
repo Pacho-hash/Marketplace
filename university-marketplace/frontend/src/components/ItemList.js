@@ -14,46 +14,47 @@ const ItemList = () => {
     const [loading, setLoading] = useState(true);
     const [isShoppingListOpen, setIsShoppingListOpen] = useState(false);
     const [expandedItem, setExpandedItem] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-    const fetchItems = async () => {
-        try {
-            const response = await axios.get('http://localhost:5000/items/all');
-            setItems(response.data);
-            setLoading(false);
-        } catch (error) {
-            console.error('Error fetching items:', error);
-            setError('Failed to fetch items. Please try again.');
-            setLoading(false);
-        }
-    };
+        const fetchItems = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/items/all');
+                setItems(response.data);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching items:', error);
+                setError('Failed to fetch items. Please try again.');
+                setLoading(false);
+            }
+        };
 
-    const fetchShoppingList = async () => {
-        try {
-            const response = await axios.get('http://localhost:5000/shopping-list', {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-            });
-            setShoppingList(response.data);
-        } catch (error) {
-            console.error('Error fetching shopping list:', error);
-        }
-    };
+        const fetchShoppingList = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/shopping-list', {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
+                setShoppingList(response.data);
+            } catch (error) {
+                console.error('Error fetching shopping list:', error);
+            }
+        };
 
-    const fetchCategories = async () => {
-        try {
-            const response = await axios.get('http://localhost:5000/items/categories');
-            setCategories(response.data);
-        } catch (error) {
-            console.error('Error fetching categories:', error);
-        }
-    };
+        const fetchCategories = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/items/categories');
+                setCategories(response.data);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
 
-    fetchItems();
-    fetchShoppingList();
-    fetchCategories();
-}, []);
+        fetchItems();
+        fetchShoppingList();
+        fetchCategories();
+    }, []);
 
     const addToShoppingList = async (item) => {
         try {
@@ -106,9 +107,14 @@ const ItemList = () => {
         return `${text.substring(0, maxLength)}...`;
     };
 
-    const filteredItems = selectedCategory
-        ? items.filter(item => item.category === selectedCategory)
-        : items;
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const filteredItems = items.filter(item =>
+        item.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (selectedCategory ? item.category === selectedCategory : true)
+    );
 
     if (loading) {
         return <div className="item-list-container">Loading...</div>;
@@ -128,8 +134,15 @@ const ItemList = () => {
                     </ul>
                 </div>
                 <div className="main-content">
-                    <h2>Items</h2>
+                    <h2>Marketplace</h2>
                     {error && <p style={{ color: 'red' }}>{error}</p>}
+                    <input
+                        type="text"
+                        placeholder="Search items..."
+                        value={searchTerm}
+                        onChange={handleSearch}
+                        className="search-bar"
+                    />
                     <div className="item-list-grid">
                         {filteredItems.length > 0 ? (
                             filteredItems.map((item) => (
@@ -142,7 +155,7 @@ const ItemList = () => {
                                         />
                                     )}
                                     <div className="item-info">
-                                        <h3>{item.title}</h3>
+                                        <h3 className="item-title">{item.title}</h3>
                                         <p>{expandedItem === item.id ? item.description : truncateText(item.description, 100)}</p>
                                         <p className="item-price">Price: ${item.price}</p>
                                         <p className="item-quantity">Available: {item.quantity}</p>

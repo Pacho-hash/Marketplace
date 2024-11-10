@@ -1,3 +1,6 @@
+/* UserDashboard.css */
+
+/* Light mode styles */
 .dashboard-container {
     text-align: center;
     margin-top: 60px;
@@ -72,4 +75,48 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+}
+
+/* Dark mode styles */
+body.dark-mode .dashboard-container {
+    background-color: black;
+    color: white;
+}
+
+body.dark-mode .dashboard-content {
+    background-color: #333;
+    color: white;
+}
+
+body.dark-mode .dashboard-content h2,
+body.dark-mode .user-info h3,
+body.dark-mode .dashboard-content h3 {
+    color: white;
+}
+
+body.dark-mode .item {
+    background-color: #444;
+    color: white;
+}
+
+body.dark-mode .edit-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+body.dark-mode .delete-button {
+    background-color: #f44336;
+    color: white;
+}
+
+body.dark-mode .item-image {
+    border: 1px solid #555; /* Add border to image */
+}
+
+body.dark-mode .description {
+    color: white;
+}
+
+body.dark-mode .price-quantity p {
+    color: #ccc;
 }

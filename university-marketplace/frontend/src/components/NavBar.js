@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import logo from '../logo.png';
+import { FaSun, FaMoon } from 'react-icons/fa'; 
+import './NavBar.css';
 
 const NavBar = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
     const [isAdmin, setIsAdmin] = useState(false);
+    const [darkMode, setDarkMode] = useState(false);
 
     useEffect(() => {
         let isMounted = true;
@@ -25,6 +28,13 @@ const NavBar = () => {
             .catch(error => console.error('Error checking user role:', error));
         }
 
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            setDarkMode(true);
+        }
+
         return () => {
             isMounted = false;
         };
@@ -35,71 +45,58 @@ const NavBar = () => {
         navigate('/');
     };
 
+    const toggleDarkMode = () => {
+        setDarkMode(!darkMode);
+        if (!darkMode) {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('theme', 'light');
+        }
+    };
+
     return (
-        <div style={navBarStyle}>
+        <div className="navbar">
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <img 
                     src={logo} 
                     alt="Marketplace Logo" 
-                    style={{ height: '40px', marginRight: '10px', cursor: 'pointer' }} 
                     onClick={() => navigate('/')} 
                 />
-                <button onClick={() => navigate('/about')} style={buttonStyle}>About</button>
-                <button onClick={() => navigate('/contact')} style={buttonStyle}>Contact Us</button>
+                <button onClick={() => navigate('/about')} className="navbar-button">About</button>
+                <button onClick={() => navigate('/contact')} className="navbar-button">Contact Us</button>
                 {isAdmin && (
                     <>
-                        <button onClick={() => navigate('/item-management')} style={buttonStyle}>Item Management</button>
-                        <button onClick={() => navigate('/admin-panel')} style={buttonStyle}>Admin Panel</button>
+                        <button onClick={() => navigate('/item-management')} className="navbar-button">Item Management</button>
+                        <button onClick={() => navigate('/admin-panel')} className="navbar-button">Admin Panel</button>
                     </>
                 )}
             </div>
             <div>
-                <button onClick={() => navigate('/item')} style={buttonStyle}>Items</button>
+                <button onClick={() => navigate('/item')} className="navbar-button">Marketplace</button>
             </div>
             <div>
                 {token ? (
                     <>
-                        <button onClick={() => navigate('/create-item')} style={buttonStyle}>Create Item</button>
-                        <button onClick={handleLogout} style={buttonStyle}>Logout</button>
-                        <button onClick={() => navigate('/profile')} style={buttonStyle}>Profile</button>
-                        <button onClick={() => navigate('/user-dashboard')} style={buttonStyle}>UserDashboard</button>
-                        <button onClick={() => navigate('/cart')} style={buttonStyle}>Cart</button>
+                        <button onClick={() => navigate('/create-item')} className="navbar-button">Create Item</button>
+                        <button onClick={handleLogout} className="navbar-button">Logout</button>
+                        <button onClick={() => navigate('/profile')} className="navbar-button">Profile</button>
+                        <button onClick={() => navigate('/user-dashboard')} className="navbar-button">UserDashboard</button>
+                        <button onClick={() => navigate('/cart')} className="navbar-button">Cart</button>
                     </>
                 ) : (
                     <>
-                        <button onClick={() => navigate('/login')} style={buttonStyle}>Login</button>
-                        <button onClick={() => navigate('/signup')} style={buttonStyle}>Sign Up</button>
+                        <button onClick={() => navigate('/login')} className="navbar-button">Login</button>
+                        <button onClick={() => navigate('/signup')} className="navbar-button">Sign Up</button>
                     </>
                 )}
+                <button onClick={toggleDarkMode} className="navbar-button">
+                    {darkMode ? <FaMoon /> : <FaSun />}
+                </button>
             </div>
         </div>
     );
-};
-
-const navBarStyle = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '10px 20px',
-    backgroundColor: '#8B0000',
-    color: 'white',
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 1000
-};
-
-const buttonStyle = {
-    padding: '8px 12px',
-    border: '2px solid #c00',
-    borderRadius: '5px',
-    backgroundColor: 'white',
-    color: '#c00',
-    fontSize: '14px',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s, color 0.3s',
-    margin: '5px'
 };
 
 export default NavBar;

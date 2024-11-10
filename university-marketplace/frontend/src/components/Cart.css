@@ -1,3 +1,14 @@
+/* Cart.css */
+
+/* Global styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5; /* Light background */
+    color: #333; /* Dark text color */
+}
+
 .cart-container {
     padding: 20px;
     margin-top: 60px; /* Adjust for the fixed navbar */
@@ -6,6 +17,11 @@
     background: #fff;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+}
+
+body.dark-mode .cart-container {
+    background-color: #1e1e1e; /* Dark background for cart container */
+    color: #e0e0e0; /* Light text color */
 }
 
 .payment-method {
@@ -22,9 +38,17 @@
     transition: background-color 0.3s, color 0.3s;
 }
 
+body.dark-mode .payment-option {
+    border: 1px solid #555; /* Dark border */
+}
+
 .payment-option.selected {
     background-color: #007bff;
     color: white;
+}
+
+body.dark-mode .payment-option.selected {
+    background-color: #0056b3; /* Darker background for selected option */
 }
 
 .payment-option input {
@@ -45,12 +69,26 @@
     border-bottom: 1px solid #ddd;
 }
 
+body.dark-mode .cart-item {
+    background-color: #2b2b2b; /* Dark background for cart item */
+    color: #e0e0e0; /* Light text color */
+    border-bottom: 1px solid #555; /* Dark border */
+}
+
 .item-details h3 {
     margin: 0;
 }
 
+body.dark-mode .item-details h3 {
+    color: #e0e0e0; /* Light text color */
+}
+
 .item-details p {
     margin: 5px 0;
+}
+
+body.dark-mode .item-details p {
+    color: #cccccc; /* Light text color */
 }
 
 .remove-button {
@@ -63,8 +101,17 @@
     transition: background-color 0.3s;
 }
 
+body.dark-mode .remove-button {
+    background-color: #333; /* Dark background for remove button */
+    color: #e0e0e0; /* Light text color */
+}
+
 .remove-button:hover {
     background-color: #c82333;
+}
+
+body.dark-mode .remove-button:hover {
+    background-color: #444; /* Darker background for hover state */
 }
 
 .cart-total {
@@ -76,6 +123,11 @@
     font-size: 1.5em;
     margin: 0;
 }
+
+body.dark-mode .cart-total h3 {
+    color: #e0e0e0; /* Light text color */
+}
+
 .loading-screen {
     position: fixed;
     top: 0;
@@ -91,6 +143,10 @@
     z-index: 1000;
 }
 
+body.dark-mode .loading-screen {
+    background-color: rgba(0, 0, 0, 0.7); /* Dark background for loading screen */
+}
+
 .payment-success {
     position: fixed;
     top: 0;
@@ -104,4 +160,8 @@
     color: white;
     font-size: 24px;
     z-index: 1000;
+}
+
+body.dark-mode .payment-success {
+    background-color: rgba(0, 0, 0, 0.7); /* Dark background for payment success */
 }

@@ -1,3 +1,6 @@
+/* ShoppingList.css */
+
+/* Light mode styles */
 .shopping-list-container {
     position: fixed;
     top: 70px; /* Adjust based on your navbar height */
@@ -44,7 +47,6 @@
     padding-top: 10px;
     background-color: #ffffff00;
 }
-/* ShoppingList.css */
 
 .remove-button {
     background-color: red;
@@ -64,4 +66,25 @@
         width: 90%; /* Adjust width for smaller screens */
         right: 5%;
     }
+}
+
+/* Dark mode styles */
+body.dark-mode .shopping-list-container {
+    background-color: #333;
+    color: white;
+    border: 2px solid #555;
+}
+
+body.dark-mode .shopping-list-container h2,
+body.dark-mode .shopping-list-container li,
+body.dark-mode .shopping-list-total {
+    color: white;
+}
+
+body.dark-mode .shopping-list-container li {
+    border-bottom: 1px solid #555;
+}
+
+body.dark-mode .shopping-list-total {
+    border-top: 1px solid #555;
 }

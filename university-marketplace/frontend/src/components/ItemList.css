@@ -6,6 +6,10 @@
     height: 100vh; /* Make the height 100% of the viewport */
 }
 
+body.dark-mode .item-list-page {
+    background-color: #1e1e1e;
+}
+
 .item-list-content {
     display: flex;
     flex: 1;
@@ -20,10 +24,17 @@
     top: 0;
     left: 0;
     background-color: #fff;
+    color: #333;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     overflow-y: auto; /* Add scroll if content overflows */
+}
+
+body.dark-mode .sidebar {
+    background-color: #333;
+    color: #e0e0e0;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
 }
 
 .category-list {
@@ -42,6 +53,14 @@
     background-color: #f0f0f0;
 }
 
+body.dark-mode .category-list li {
+    border-bottom: 1px solid #555;
+}
+
+body.dark-mode .category-list li:hover {
+    background-color: #555;
+}
+
 .main-content {
     flex: 1;
     margin-left: 20px; /* Adjust margin for proper spacing */
@@ -51,6 +70,10 @@ h2 {
     color: #333;
     font-size: 2.5rem;
     margin-bottom: 20px;
+}
+
+body.dark-mode h2 {
+    color: #e0e0e0;
 }
 
 .item-list-grid {
@@ -69,15 +92,28 @@ h2 {
     cursor: pointer;
 }
 
+body.dark-mode .item-card {
+    background-color: #444;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+}
+
 .item-card.expanded {
     transform: scale(1.05);
     z-index: 10;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
+body.dark-mode .item-card.expanded {
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+}
+
 .item-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+body.dark-mode .item-card:hover {
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.15);
 }
 
 .item-image {
@@ -94,6 +130,10 @@ h2 {
     margin-bottom: 10px;
 }
 
+body.dark-mode .item-info h3 {
+    color: #e43636; /* Tomato color */
+}
+
 .item-info p {
     color: #555;
     margin: 5px 0;
@@ -101,9 +141,17 @@ h2 {
     white-space: pre-wrap; /* Ensure line breaks are preserved */
 }
 
+body.dark-mode .item-info p {
+    color: #ccc;
+}
+
 .item-price {
     font-weight: bold;
     color: #333;
+}
+
+body.dark-mode .item-price {
+    color: #fff;
 }
 
 .item-user {
@@ -111,11 +159,19 @@ h2 {
     color: #777;
 }
 
+body.dark-mode .item-user {
+    color: #aaa;
+}
+
 .no-items {
     text-align: center;
     font-style: italic;
     color: #888;
     margin-top: 20px;
+}
+
+body.dark-mode .no-items {
+    color: #bbb;
 }
 
 /* Position the button at the bottom right */
@@ -136,4 +192,27 @@ h2 {
 
 .toggle-shopping-list img:hover {
     transform: scale(1.1);
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+body.dark-mode button {
+    background-color: #8B0000;
+    color: white;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+body.dark-mode button:hover {
+    background-color: #b22222; /* Firebrick color */
 }

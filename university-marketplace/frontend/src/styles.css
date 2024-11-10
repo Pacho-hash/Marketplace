@@ -13,46 +13,36 @@ h2 {
     color: #c00; /* Red for headings */
 }
 
-/* Container styles */
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #121212; /* Dark background */
+    color: #e0e0e0; /* Light text color */
 }
 
-/* Form styles */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+body.dark-mode h2 {
+    color: #ff6f61; /* Light red for headings */
 }
 
-input, textarea {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
+body.dark-mode .container {
+    background-color: #1e1e1e; /* Dark container background */
+    color: #e0e0e0; /* Light text color */
 }
 
-input:focus, textarea:focus {
-    border-color: #c00; /* Change border color on focus */
+body.dark-mode input, 
+body.dark-mode textarea {
+    background-color: #333; /* Dark input background */
+    color: #e0e0e0; /* Light input text color */
+    border: 1px solid #555; /* Dark border */
 }
 
-/* Button styles */
-button {
-    padding: 8px 12px; /* Smaller padding */
-    border: 2px solid #c00; /* Red border */
-    border-radius: 5px;
-    background-color: white; /* White background */
-    color: #c00; /* Red text */
-    font-size: 14px; /* Slightly smaller font size */
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s; /* Transition for background and text color */
-    margin: 5px; /* Add margin to ensure buttons are not too close */
+body.dark-mode button {
+    background-color: #333; /* Dark button background */
+    color: #e0e0e0; /* Light button text color */
+    border-color: #ff6f61; /* Light red border */
 }
 
-button:hover {
-    background-color: gray; /* Gray background on hover */
+body.dark-mode button:hover {
+    background-color: #555; /* Darker button background on hover */
     color: white; /* White text on hover */
 }
 
@@ -175,4 +165,14 @@ button:hover {
 .message {
     margin-top: 15px;
     color: green;
+}
+
+/* Dark mode styles for form container */
+body.dark-mode .form-container {
+    background-color: #1e1e1e; /* Dark background for form container */
+    color: #e0e0e0; /* Light text color */
+}
+
+body.dark-mode .label {
+    color: #e0e0e0; /* Light color for labels */
 }

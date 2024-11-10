@@ -7,7 +7,7 @@
 }
 
 .hero-section {
-    background-image: url('./background.jpg'); /* Add a nice background image */
+    background-image: url('./light-background.jpg'); /* Light mode background image */
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -15,29 +15,38 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #8B0000;
+    color: #ffffff;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+body.dark-mode .hero-section {
+    background-image: url('./dark-background.jpg'); /* Dark mode background image */
+}
+
 .hero-section h1 {
-    font-size: 4rem;
-    margin-bottom: 20px;
+    font-size: 5rem;
+    margin-bottom: 300px;
 }
 
 .hero-section p {
     font-size: 1.5rem;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
 }
 
 .cta-button {
     padding: 15px 30px;
     font-size: 1.2rem;
-    color: white;
-    background-color: #8B0000;
+    color: #8B0000; /* Dark red text */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-black background */
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
+}
+
+body.dark-mode .cta-button {
+    background-color: #8B0000; /* Red background */
+    color: white; /* White text */
 }
 
 .cta-button:hover {

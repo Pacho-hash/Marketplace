@@ -1,5 +1,14 @@
 /* AdminPanel.css */
 
+/* Global styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5; /* Light background */
+    color: #333; /* Dark text color */
+}
+
 .admin-panel {
     display: flex;
     flex-direction: column;
@@ -7,6 +16,11 @@
     padding: 20px;
     background-color: #f5f5f5;
     min-height: 100vh;
+}
+
+body.dark-mode .admin-panel {
+    background-color: #1e1e1e; /* Dark background */
+    color: #e0e0e0; /* Light text color */
 }
 
 .admin-panel-content {
@@ -19,10 +33,19 @@
     text-align: center;
 }
 
+body.dark-mode .admin-panel-content {
+    background-color: #1e1e1e; /* Dark background for content */
+    color: #e0e0e0; /* Light text color */
+}
+
 h2 {
     color: #333;
     font-size: 2.5rem;
     margin-bottom: 20px;
+}
+
+body.dark-mode h2 {
+    color: #ff6f61; /* Light red for headings */
 }
 
 .search-input {
@@ -32,6 +55,12 @@ h2 {
     border-radius: 5px;
     margin-bottom: 20px;
     box-sizing: border-box;
+}
+
+body.dark-mode .search-input {
+    background-color: #333; /* Dark input background */
+    color: #e0e0e0; /* Light input text color */
+    border: 1px solid #555; /* Dark border */
 }
 
 .user-list {
@@ -51,13 +80,27 @@ h2 {
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
+body.dark-mode .user-item {
+    background-color: #2b2b2b; /* Dark background for user item */
+    color: #e0e0e0; /* Light text color */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Darker shadow */
+}
+
 .user-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
+body.dark-mode .user-item:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Darker hover shadow */
+}
+
 .user-info {
     color: #555;
+}
+
+body.dark-mode .user-info {
+    color: #e0e0e0; /* Light text color */
 }
 
 .user-actions {
@@ -70,8 +113,18 @@ h2 {
     color: white;
 }
 
+body.dark-mode .admin-button {
+    background-color: #28a745; /* Keep same background in dark mode */
+    color: white;
+}
+
 .user-button {
     background-color: #dc3545;
+    color: white;
+}
+
+body.dark-mode .user-button {
+    background-color: #dc3545; /* Keep same background in dark mode */
     color: white;
 }
 
@@ -87,8 +140,16 @@ button:hover {
     opacity: 0.9;
 }
 
+body.dark-mode button:hover {
+    background-color: #555; /* Darker background on hover */
+}
+
 .access-denied {
     color: red;
     font-weight: bold;
     margin-top: 20px;
+}
+
+body.dark-mode .access-denied {
+    color: #ff6f61; /* Light red for access denied */
 }
