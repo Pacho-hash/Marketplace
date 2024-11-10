@@ -5,13 +5,13 @@
     width: 100%; /* Make the container responsive */
     max-width: 300px; /* Set a maximum width */
     padding: 20px;
-    border: 1px solid #ddd;
+    border: 2px solid #8B0000;
     border-radius: 4px;
     background-color: #f9f9f9;
     z-index: 1000;
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 130px); /* Adjust based on your navbar height */
+    height: calc(70vh - 130px); /* Adjust based on your navbar height */
 }
 
 .shopping-list-items {
@@ -42,7 +42,7 @@
 .shopping-list-total {
     border-top: 1px solid #ddd;
     padding-top: 10px;
-    background-color: #fff;
+    background-color: #ffffff00;
 }
 /* ShoppingList.css */
 

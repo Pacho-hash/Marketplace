@@ -1,11 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';  // Ensure CSS is linked, if needed
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root'));  // Ensure the "root" div exists in index.html
+
+root.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
-  document.getElementById('root')  // Ensure the "root" div exists in index.html
+  </React.StrictMode>
 );

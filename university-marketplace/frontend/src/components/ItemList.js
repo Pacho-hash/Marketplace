@@ -16,52 +16,44 @@ const ItemList = () => {
     const [expandedItem, setExpandedItem] = useState(null);
 
     useEffect(() => {
-        const fetchItems = async () => {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                console.error('No token found');
-                return;
-            }
-            try {
-                const response = await axios.get('http://localhost:5000/items', {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                setItems(response.data);
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching items:', error);
-                setLoading(false);
-            }
-        };
+    const fetchItems = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/items/all');
+            setItems(response.data);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching items:', error);
+            setError('Failed to fetch items. Please try again.');
+            setLoading(false);
+        }
+    };
 
-        const fetchShoppingList = async () => {
-            try {
-                const response = await axios.get('http://localhost:5000/shopping-list', {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`,
-                    },
-                });
-                setShoppingList(response.data);
-            } catch (error) {
-                console.error('Error fetching shopping list:', error);
-            }
-        };
+    const fetchShoppingList = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/shopping-list', {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+            setShoppingList(response.data);
+        } catch (error) {
+            console.error('Error fetching shopping list:', error);
+        }
+    };
 
-        const fetchCategories = async () => {
-            try {
-                const response = await axios.get('http://localhost:5000/items/categories');
-                setCategories(response.data);
-            } catch (error) {
-                console.error('Error fetching categories:', error);
-            }
-        };
+    const fetchCategories = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/items/categories');
+            setCategories(response.data);
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+        }
+    };
 
-        fetchItems();
-        fetchShoppingList();
-        fetchCategories();
-    }, []);
+    fetchItems();
+    fetchShoppingList();
+    fetchCategories();
+}, []);
 
     const addToShoppingList = async (item) => {
         try {
@@ -136,7 +128,7 @@ const ItemList = () => {
                     </ul>
                 </div>
                 <div className="main-content">
-                    <h2>Item Listings</h2>
+                    <h2>Items</h2>
                     {error && <p style={{ color: 'red' }}>{error}</p>}
                     <div className="item-list-grid">
                         {filteredItems.length > 0 ? (

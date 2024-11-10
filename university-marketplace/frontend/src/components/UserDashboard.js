@@ -102,7 +102,7 @@ const UserDashboard = () => {
                                         name="description" 
                                         value={editData.description} 
                                         onChange={handleEditChange} 
-                                        placeholder="Description"
+                                        placeholder="Description" 
                                     />
                                     <input 
                                         type="number" 
@@ -124,9 +124,11 @@ const UserDashboard = () => {
                             ) : (
                                 <>
                                     <h4>{item.title}</h4>
-                                    <p>{item.description}</p>
-                                    <p>Price: ${item.price}</p>
-                                    <p>Quantity: {item.quantity}</p> {/* Display quantity */}
+                                    <p className="description">{item.description}</p>
+                                    <div className="price-quantity">
+                                        <p>Price: ${item.price}</p>
+                                        <p>Quantity: {item.quantity}</p>
+                                    </div>
                                     {/* Display the item image */}
                                     {item.imageUrl && (
                                         <img src={item.imageUrl} alt={item.title} className="item-image" />
