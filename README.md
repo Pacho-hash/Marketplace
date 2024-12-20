@@ -9,8 +9,7 @@ The Marketplace project is a comprehensive online platform designed to facilitat
 3. [Technologies Used](#technologies-used)
 4. [Installation](#installation)
 5. [Usage](#usage)
-6. [Contributing](#contributing)
-7. [License](#license)
+6. [License](#license)
 
 ## Introduction
 
