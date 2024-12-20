@@ -6,7 +6,7 @@ const path = require('path');
 const authRoutes = require('./routes/auth');  
 const itemRoutes = require('./routes/item');
 const adminRoutes = require('./routes/admin'); 
-const shoppingListRoutes = require('./routes/shoppingList'); // Import the shopping list routes
+const shoppingListRoutes = require('./routes/shoppingList'); 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/auth', authRoutes); 
 app.use('/items', itemRoutes);
 app.use('/admin', adminRoutes);  
-app.use('/shopping-list', shoppingListRoutes); // Use the shopping list routes
+app.use('/shopping-list', shoppingListRoutes); 
 
 // uploads directory 
 const uploadDir = path.join(__dirname, 'uploads');

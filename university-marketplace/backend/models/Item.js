@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
-const User = require('./User'); // Import User before defining associations
+const User = require('./User'); 
 
 const Item = sequelize.define('Item', {
     title: {
@@ -41,7 +41,6 @@ const Item = sequelize.define('Item', {
     timestamps: true,
 });
 
-// Association defined here or in main database file to avoid circular dependencies
 Item.belongsTo(User, { foreignKey: 'sellerId', as: 'user' });
 
 module.exports = Item;

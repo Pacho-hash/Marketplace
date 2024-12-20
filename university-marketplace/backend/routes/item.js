@@ -4,7 +4,7 @@ const path = require('path');
 const Item = require('../models/Item');
 const User = require('../models/User');
 const verifyToken = require('../middlewares/verifyToken'); 
-const isAdmin = require('../middlewares/isAdmin'); // Import the admin middleware
+const isAdmin = require('../middlewares/isAdmin'); 
 const router = express.Router();
 
 // Set up storage for Multer
@@ -23,7 +23,7 @@ const upload = multer({ storage });
 // Create item with image upload
 router.post('/create-item', verifyToken, upload.single('image'), async (req, res) => {
     const { title, description, price, quantity, category } = req.body; 
-    const sellerId = req.user.id; // req.user.id
+    const sellerId = req.user.id; 
     const imageUrl = req.file ? `http://localhost:5000/uploads/${req.file.filename}` : null;
 
     try {
@@ -54,7 +54,7 @@ router.get('/all', async (req, res) => {
 
 // Fetch user items
 router.get('/', verifyToken, async (req, res) => {
-    const userId = req.user.id; // Use req.user.id
+    const userId = req.user.id; 
 
     try {
         const items = await Item.findAll({

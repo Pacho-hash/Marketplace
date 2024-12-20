@@ -1,7 +1,7 @@
 const express = require('express');
-const ShoppingList = require('../models/ShoppingList'); // Ensure you have this model
+const ShoppingList = require('../models/ShoppingList'); 
 const verifyToken = require('../middlewares/verifyToken');
-const isUserOrAdmin = require('../middlewares/isAdmin'); // Ensure you have this middleware
+const isUserOrAdmin = require('../middlewares/isAdmin');
 const router = express.Router();
 
 // Add item to shopping list
@@ -37,7 +37,7 @@ router.get('/', verifyToken, async (req, res) => {
 
     try {
         const shoppingList = await ShoppingList.findAll({ where: { userId } });
-        console.log('Fetched shopping list:', shoppingList); // Log fetched data
+        console.log('Fetched shopping list:', shoppingList); 
         res.json(shoppingList);
     } catch (error) {
         console.error('Error fetching shopping list:', error);

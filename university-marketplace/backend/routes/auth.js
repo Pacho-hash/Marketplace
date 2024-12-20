@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');  
 const Item = require('../models/Item'); 
-const ShoppingList = require('../models/ShoppingList'); // Ensure you have this model
+const ShoppingList = require('../models/ShoppingList'); 
 const router = express.Router();
 
 
@@ -117,13 +117,13 @@ router.put('/profile', verifyToken, async (req, res) => {
 
 
 router.post('/create-item', verifyToken, async (req, res) => {
-    const { title, description, price, quantity } = req.body; // Include quantity
+    const { title, description, price, quantity } = req.body; 
     const sellerId = req.userId;
     
     console.log("Creating item with sellerId:", sellerId);
-    console.log('Request body:', req.body); // Log request body
-    console.log('Uploaded file:', req.file); // Log uploaded file
-    console.log('Seller ID (userId):', sellerId); // Log sellerId before creating the item
+    console.log('Request body:', req.body); 
+    console.log('Uploaded file:', req.file); 
+    console.log('Seller ID (userId):', sellerId); 
 
     // Validate input fields
     if (!title || !description || !price || !sellerId || quantity === undefined) {
@@ -137,7 +137,7 @@ router.post('/create-item', verifyToken, async (req, res) => {
             return res.status(400).json({ message: 'Seller ID does not exist.' });
         }
 
-        const newItem = await Item.create({ title, description, price, quantity, sellerId }); // Include quantity
+        const newItem = await Item.create({ title, description, price, quantity, sellerId }); 
         return res.status(201).json({ message: 'Item created successfully!', item: newItem });
     } catch (error) {
         console.error('Error creating item:', error);
@@ -185,8 +185,7 @@ router.get('/dashboard', verifyToken, async (req, res) => {
         const dashboardData = {
             username: user.username,
             email: user.email,
-            // Add other relevant user information or related data
-            // For example, items the user has created
+            
             items: await Item.findAll({ where: { sellerId: user.id } }), // Fetching items created by the user
         };
         res.json(dashboardData);
@@ -305,7 +304,6 @@ router.post('/payment', verifyToken, async (req, res) => {
     const { cartItems, paymentDetails } = req.body;
 
     try {
-        // Simulate payment processing (this is where you would integrate with a real payment gateway)
         console.log('Processing payment with details:', paymentDetails);
 
         // Clear cart items from the database

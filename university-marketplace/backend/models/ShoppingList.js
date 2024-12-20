@@ -25,7 +25,7 @@ const ShoppingList = sequelize.define('ShoppingList', {
         allowNull: false,
         defaultValue: 1,
     },
-    price: {  // Add this field
+    price: {  
         type: DataTypes.FLOAT,
         allowNull: false,
     },
