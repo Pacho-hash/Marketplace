@@ -1,6 +1,5 @@
 import React from 'react';
-import NavBar from '../components/NavBar'; // Adjust the path as needed
-
+import NavBar from '../components/NavBar';
 
 const About = () => {
   return (
