@@ -58,7 +58,7 @@ body.dark-mode .form-container {
 }
 
 body.dark-mode .title {
-    color: #ff6f61; /* Light red color for title */
+    color: #c00; /* Light red color for title */
 }
 
 .form {
@@ -103,7 +103,7 @@ body.dark-mode .input {
 }
 
 body.dark-mode .button {
-    background-color: #333; /* Dark button background */
+    background-color: #c00; /* Dark button background */
     color: #e0e0e0; /* Light button text color */
     border-color: #ff6f61; /* Light red border */
 }

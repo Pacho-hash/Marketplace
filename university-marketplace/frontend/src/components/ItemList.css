@@ -198,19 +198,20 @@ button {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #007bff;
-    color: white;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-black background */
+    color: #8B0000; /* Dark red text */
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 body.dark-mode button {
-    background-color: #8B0000;
-    color: white;
+    background-color: #8B0000; /* Red background */
+    color: white; /* White text */
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #a00;
+    transform: scale(1.05);
 }
 
 body.dark-mode button:hover {

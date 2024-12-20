@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import NavBar from './components/NavBar'; // Adjust the path as needed
 import { useNavigate } from 'react-router-dom';
 import './HomePage.css'; // Import the CSS file for styling
@@ -12,6 +12,7 @@ const Home = () => {
         navigate('/'); // Redirect to homepage
     };
 
+    
     return (
         <div className="homepage">
             <NavBar />
