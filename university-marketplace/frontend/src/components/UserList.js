@@ -6,7 +6,7 @@ const UserList = () => {
     const [search, setSearch] = useState('');
 
     useEffect(() => {
-        const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage
+        const token = localStorage.getItem('token'); 
 
         axios.get('http://localhost:5000/auth/users', {
             headers: {

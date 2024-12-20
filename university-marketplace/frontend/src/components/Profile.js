@@ -7,7 +7,7 @@ import './Profile.css';
 const Profile = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');  // New state for phone number
+    const [phoneNumber, setPhoneNumber] = useState('');  
     const [message, setMessage] = useState('');
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -23,7 +23,7 @@ const Profile = () => {
                 });
                 setUsername(response.data.username);
                 setEmail(response.data.email);
-                setPhoneNumber(response.data.phone_number); // Set phone number from response
+                setPhoneNumber(response.data.phone_number); 
             } catch (error) {
                 console.error('Error fetching profile:', error);
                 navigate('/login'); // Redirect to login if not authenticated
@@ -53,8 +53,8 @@ const Profile = () => {
         e.preventDefault();
         const token = localStorage.getItem('token');
         console.log('Changing password with token:', token); 
-        console.log('Old Password:', oldPassword); // Debug log
-        console.log('New Password:', newPassword); // Debug log
+        console.log('Old Password:', oldPassword); 
+        console.log('New Password:', newPassword); 
         try {
             const response = await axios.put(
                 'http://localhost:5000/auth/change-password',

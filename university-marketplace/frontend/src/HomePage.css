@@ -37,8 +37,8 @@ body.dark-mode .hero-section {
 .cta-button {
     padding: 15px 30px;
     font-size: 1.2rem;
-    color: #8B0000; /* Dark red text */
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-black background */
+    color: #8B0000; 
+    background-color: rgba(0, 0, 0, 0.5); 
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -46,8 +46,8 @@ body.dark-mode .hero-section {
 }
 
 body.dark-mode .cta-button {
-    background-color: #8B0000; /* Red background */
-    color: white; /* White text */
+    background-color: #8B0000; 
+    color: white; 
 }
 
 .cta-button:hover {

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import NavBar from '../components/NavBar'; // Adjust the path as needed
+import NavBar from '../components/NavBar'; 
 import { useNavigate } from 'react-router-dom';
-import './UserDashboard.css'; // Import the CSS file
+import './UserDashboard.css'; 
 
 const UserDashboard = () => {
     const [userData, setUserData] = useState(null);
     const [items, setItems] = useState([]);
     const [editingItem, setEditingItem] = useState(null); // Holds the item being edited
-    const [editData, setEditData] = useState({ title: '', description: '', price: '', quantity: '' }); // Include quantity
+    const [editData, setEditData] = useState({ title: '', description: '', price: '', quantity: '' }); 
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -47,7 +47,7 @@ const UserDashboard = () => {
     };
 
     const handleEditClick = (item) => {
-        setEditingItem(item); // Set the item to be edited
+        setEditingItem(item); 
         setEditData({ title: item.title, description: item.description, price: item.price, quantity: item.quantity });
     };
 

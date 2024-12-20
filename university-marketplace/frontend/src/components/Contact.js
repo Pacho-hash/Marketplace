@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import NavBar from '../components/NavBar'; // Adjust the path as needed
+import NavBar from '../components/NavBar'; 
 
 const Contact = () => {
   const [name, setName] = useState('');

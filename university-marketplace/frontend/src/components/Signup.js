@@ -7,14 +7,14 @@ const Signup = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');  // New state for phone number
+    const [phoneNumber, setPhoneNumber] = useState('');  
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
 
     const handleSignup = async (e) => {
         e.preventDefault();
         setLoading(true);
-        if (!phoneNumber.startsWith('0090')) {  // Phone number validation
+        if (!phoneNumber.startsWith('0090')) {  
             setMessage('Phone number must start with 0090');
             setLoading(false);
             return;
@@ -24,7 +24,7 @@ const Signup = () => {
                 username,
                 email,
                 password,
-                phoneNumber  // Include phone number in signup request
+                phoneNumber 
             });
             setMessage(response.data.message || 'Signup successful!');
             setLoading(false);

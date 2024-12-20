@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import NavBar from './components/NavBar'; // Adjust the path as needed
+import NavBar from './components/NavBar'; 
 import { useNavigate } from 'react-router-dom';
-import './HomePage.css'; // Import the CSS file for styling
+import './HomePage.css'; 
 
 const Home = () => {
     const navigate = useNavigate();
@@ -9,7 +9,7 @@ const Home = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('token'); // Remove the token from localStorage
-        navigate('/'); // Redirect to homepage
+        navigate('/'); 
     };
 
     
